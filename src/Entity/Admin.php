@@ -20,21 +20,21 @@ class Admin
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="admin")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $utilisateur;
+    private $compte;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUtilisateur(): ?User
+    public function getCompte(): ?User
     {
-        return $this->utilisateur;
+        return $this->compte;
     }
 
-    public function setUtilisateur(?User $utilisateur): self
+    public function setCompte(?User $compte): self
     {
-        $this->utilisateur = $utilisateur;
+        $this->compte = $compte;
 
         return $this;
     }

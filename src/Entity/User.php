@@ -36,28 +36,24 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $prenom;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Admin", mappedBy="utilisateur", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Admin", mappedBy="compte", orphanRemoval=true)
      */
     private $admin;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="utilisateur", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Prof", mappedBy="compte", orphanRemoval=true)
+     */
+    private $prof;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="compte", orphanRemoval=true)
      */
     private $etudiant;
 
     public function __construct()
     {
         $this->admin = new ArrayCollection();
+        $this->prof = new ArrayCollection();
         $this->etudiant = new ArrayCollection();
     }
 
@@ -139,30 +135,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Admin[]
      */
@@ -175,7 +147,7 @@ class User implements UserInterface
     {
         if (!$this->admin->contains($admin)) {
             $this->admin[] = $admin;
-            $admin->setUtilisateur($this);
+            $admin->setCompte($this);
         }
 
         return $this;
@@ -186,8 +158,39 @@ class User implements UserInterface
         if ($this->admin->contains($admin)) {
             $this->admin->removeElement($admin);
             // set the owning side to null (unless already changed)
-            if ($admin->getUtilisateur() === $this) {
-                $admin->setUtilisateur(null);
+            if ($admin->getCompte() === $this) {
+                $admin->setCompte(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Prof[]
+     */
+    public function getProf(): Collection
+    {
+        return $this->prof;
+    }
+
+    public function addProf(Prof $prof): self
+    {
+        if (!$this->prof->contains($prof)) {
+            $this->prof[] = $prof;
+            $prof->setCompte($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProf(Prof $prof): self
+    {
+        if ($this->prof->contains($prof)) {
+            $this->prof->removeElement($prof);
+            // set the owning side to null (unless already changed)
+            if ($prof->getCompte() === $this) {
+                $prof->setCompte(null);
             }
         }
 
@@ -206,7 +209,7 @@ class User implements UserInterface
     {
         if (!$this->etudiant->contains($etudiant)) {
             $this->etudiant[] = $etudiant;
-            $etudiant->setUtilisateur($this);
+            $etudiant->setCompte($this);
         }
 
         return $this;
@@ -217,8 +220,8 @@ class User implements UserInterface
         if ($this->etudiant->contains($etudiant)) {
             $this->etudiant->removeElement($etudiant);
             // set the owning side to null (unless already changed)
-            if ($etudiant->getUtilisateur() === $this) {
-                $etudiant->setUtilisateur(null);
+            if ($etudiant->getCompte() === $this) {
+                $etudiant->setCompte(null);
             }
         }
 

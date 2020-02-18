@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200211005509 extends AbstractMigration
+final class Version20200218152535 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,11 @@ final class Version20200211005509 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SEQUENCE organisme_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE organisme (id INT NOT NULL, name VARCHAR(255) NOT NULL, justificatif VARCHAR(255) DEFAULT NULL, verifier BOOLEAN NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE SEQUENCE diplome_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE TABLE diplome (id INT NOT NULL, nom VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('ALTER TABLE filiere ADD diplome_id INT NOT NULL');
+        $this->addSql('ALTER TABLE filiere ADD CONSTRAINT FK_2ED05D9E26F859E2 FOREIGN KEY (diplome_id) REFERENCES diplome (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('CREATE INDEX IDX_2ED05D9E26F859E2 ON filiere (diplome_id)');
     }
 
     public function down(Schema $schema) : void
@@ -32,7 +35,10 @@ final class Version20200211005509 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('DROP SEQUENCE organisme_id_seq CASCADE');
-        $this->addSql('DROP TABLE organisme');
+        $this->addSql('ALTER TABLE filiere DROP CONSTRAINT FK_2ED05D9E26F859E2');
+        $this->addSql('DROP SEQUENCE diplome_id_seq CASCADE');
+        $this->addSql('DROP TABLE diplome');
+        $this->addSql('DROP INDEX IDX_2ED05D9E26F859E2');
+        $this->addSql('ALTER TABLE filiere DROP diplome_id');
     }
 }
