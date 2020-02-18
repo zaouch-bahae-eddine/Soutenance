@@ -24,10 +24,6 @@ class Etudiant
      */
     private $compte;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $mailPerso;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Creneau", mappedBy="etudiants")
@@ -43,6 +39,12 @@ class Etudiant
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="etudiant")
      */
     private $notes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Filiere", inversedBy="etudiants")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $filiere;
 
     public function __construct()
     {
@@ -166,6 +168,18 @@ class Etudiant
                 $note->setEtudiant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFiliere(): ?Filiere
+    {
+        return $this->filiere;
+    }
+
+    public function setFiliere(?Filiere $filiere): self
+    {
+        $this->filiere = $filiere;
 
         return $this;
     }

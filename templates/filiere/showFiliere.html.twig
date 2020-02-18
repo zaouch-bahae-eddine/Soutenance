@@ -21,7 +21,7 @@
     <ul>
         {% for filiere in filieres %}
             <li>
-                {{ filiere.nom }} Diplome: {{ filiere.diplome.nom }}
+                {{ filiere.nom }} {{ filiere.annee }} Diplome: {{ filiere.diplome.nom }}
                 <a href="{{ path('filiere_set',{'id': filiere.id}) }}">editer</a>
                 <a href="{{ path('filiere_remove',{'id': filiere.id}) }}">remove</a>
             </li>

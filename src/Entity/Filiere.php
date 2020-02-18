@@ -34,9 +34,26 @@ class Filiere
      */
     private $diplome;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $annee;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="filiere", orphanRemoval=true)
+     */
+    private $etudiants;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Prof", inversedBy="filieres")
+     */
+    private $prof;
+
     public function __construct()
     {
         $this->modules = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
+        $this->prof = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,6 +112,74 @@ class Filiere
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
+
+        return $this;
+    }
+    public function getAnnee(): ?string
+    {
+        return $this->annee;
+    }
+
+    public function setAnnee(string $annee): self
+    {
+        $this->annee = $annee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Etudiant[]
+     */
+    public function getEtudiants(): Collection
+    {
+        return $this->etudiants;
+    }
+
+    public function addEtudiant(Etudiant $etudiant): self
+    {
+        if (!$this->etudiants->contains($etudiant)) {
+            $this->etudiants[] = $etudiant;
+            $etudiant->setFiliere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtudiant(Etudiant $etudiant): self
+    {
+        if ($this->etudiants->contains($etudiant)) {
+            $this->etudiants->removeElement($etudiant);
+            // set the owning side to null (unless already changed)
+            if ($etudiant->getFiliere() === $this) {
+                $etudiant->setFiliere(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Prof[]
+     */
+    public function getProf(): Collection
+    {
+        return $this->prof;
+    }
+
+    public function addProf(Prof $prof): self
+    {
+        if (!$this->prof->contains($prof)) {
+            $this->prof[] = $prof;
+        }
+
+        return $this;
+    }
+
+    public function removeProf(Prof $prof): self
+    {
+        if ($this->prof->contains($prof)) {
+            $this->prof->removeElement($prof);
+        }
 
         return $this;
     }

@@ -29,10 +29,6 @@ class Module
      */
     private $filiere;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $annee;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Soutenance", mappedBy="module")
@@ -69,18 +65,6 @@ class Module
     public function setFiliere(?Filiere $filiere): self
     {
         $this->filiere = $filiere;
-
-        return $this;
-    }
-
-    public function getAnnee(): ?string
-    {
-        return $this->annee;
-    }
-
-    public function setAnnee(string $annee): self
-    {
-        $this->annee = $annee;
 
         return $this;
     }

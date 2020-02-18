@@ -68,6 +68,7 @@ class FiliereController extends AbstractController
                 $filiere
                     ->setNom($form->getData()->getNom())
                     ->setDiplome($form->getData()->getDiplome())
+                    ->setAnnee($form->getData()->getAnnee())
                 ;
                 $msg = "modifié";
             }
