@@ -28,6 +28,12 @@ class Diplome
      */
     private $filieres;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin", inversedBy="diplomes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $admin;
+
     public function __construct()
     {
         $this->filieres = new ArrayCollection();
@@ -77,6 +83,18 @@ class Diplome
                 $filiere->setDiplome(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdmin(): ?Admin
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(?Admin $admin): self
+    {
+        $this->admin = $admin;
 
         return $this;
     }

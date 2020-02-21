@@ -27,7 +27,7 @@ class AdminCompteFixtures extends Fixture
         $admin = new Admin();
         $utilisateur = new Utilisateur();
         $utilisateur->setEmail('admin@admin.sou')
-            ->setRoles(['ADMIN_ROLE'])
+            ->setRoles(['ROLE_ADMIN'])
             ->setMailPerso('bahae.zaouch.1@gmail.com')
             ->setPassword($this->encoder->encodePassword($utilisateur, 'admin'));
         $admin->setCompte($utilisateur);

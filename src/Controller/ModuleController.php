@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Filiere;
 use App\Entity\Module;
-use App\Form\FiliereFormType;
 use App\Form\ModuleFormType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/admin")
+ */
 class ModuleController extends AbstractController
 {
     /**

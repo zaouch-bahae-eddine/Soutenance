@@ -65,16 +65,16 @@ final class Version20200220202812 extends AbstractMigration
         $this->addSql('CREATE TABLE salle_creneau (salle_id INT NOT NULL, creneau_id INT NOT NULL, PRIMARY KEY(salle_id, creneau_id))');
         $this->addSql('CREATE INDEX IDX_D450E70EDC304035 ON salle_creneau (salle_id)');
         $this->addSql('CREATE INDEX IDX_D450E70E7D0729A9 ON salle_creneau (creneau_id)');
-        $this->addSql('CREATE TABLE soutenance (id INT NOT NULL, module_id INT NOT NULL, prof_id INT NOT NULL, nom VARCHAR(255) NOT NULL, alerte TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_4D59FF6EAFC2B591 ON soutenance (module_id)');
-        $this->addSql('CREATE INDEX IDX_4D59FF6EABC1F7FE ON soutenance (prof_id)');
+        $this->addSql('CREATE TABLE home (id INT NOT NULL, module_id INT NOT NULL, prof_id INT NOT NULL, nom VARCHAR(255) NOT NULL, alerte TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE INDEX IDX_4D59FF6EAFC2B591 ON home (module_id)');
+        $this->addSql('CREATE INDEX IDX_4D59FF6EABC1F7FE ON home (prof_id)');
         $this->addSql('CREATE TABLE soutenance_prof (soutenance_id INT NOT NULL, prof_id INT NOT NULL, PRIMARY KEY(soutenance_id, prof_id))');
         $this->addSql('CREATE INDEX IDX_D822EB0AA59B3775 ON soutenance_prof (soutenance_id)');
         $this->addSql('CREATE INDEX IDX_D822EB0AABC1F7FE ON soutenance_prof (prof_id)');
         $this->addSql('CREATE TABLE utilisateur (id INT NOT NULL, email VARCHAR(180) NOT NULL, mail_perso VARCHAR(255) DEFAULT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1D1C63B3E7927C74 ON utilisateur (email)');
         $this->addSql('ALTER TABLE admin ADD CONSTRAINT FK_880E0D76F2C56620 FOREIGN KEY (compte_id) REFERENCES utilisateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE creneau ADD CONSTRAINT FK_F9668B5FA59B3775 FOREIGN KEY (soutenance_id) REFERENCES soutenance (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE creneau ADD CONSTRAINT FK_F9668B5FA59B3775 FOREIGN KEY (soutenance_id) REFERENCES home (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE creneau_etudiant ADD CONSTRAINT FK_26FF41A67D0729A9 FOREIGN KEY (creneau_id) REFERENCES creneau (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE creneau_etudiant ADD CONSTRAINT FK_26FF41A6DDEAB1A3 FOREIGN KEY (etudiant_id) REFERENCES etudiant (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE etudiant ADD CONSTRAINT FK_717E22E3F2C56620 FOREIGN KEY (compte_id) REFERENCES utilisateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -83,17 +83,17 @@ final class Version20200220202812 extends AbstractMigration
         $this->addSql('ALTER TABLE filiere_prof ADD CONSTRAINT FK_D74072B2180AA129 FOREIGN KEY (filiere_id) REFERENCES filiere (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE filiere_prof ADD CONSTRAINT FK_D74072B2ABC1F7FE FOREIGN KEY (prof_id) REFERENCES prof (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE module ADD CONSTRAINT FK_C242628180AA129 FOREIGN KEY (filiere_id) REFERENCES filiere (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA14A59B3775 FOREIGN KEY (soutenance_id) REFERENCES soutenance (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA14A59B3775 FOREIGN KEY (soutenance_id) REFERENCES home (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA14ABC1F7FE FOREIGN KEY (prof_id) REFERENCES prof (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA14DDEAB1A3 FOREIGN KEY (etudiant_id) REFERENCES etudiant (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE prof ADD CONSTRAINT FK_5BBA70BBF2C56620 FOREIGN KEY (compte_id) REFERENCES utilisateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE rendu ADD CONSTRAINT FK_2A7F8EB9DDEAB1A3 FOREIGN KEY (etudiant_id) REFERENCES etudiant (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE rendu ADD CONSTRAINT FK_2A7F8EB9A59B3775 FOREIGN KEY (soutenance_id) REFERENCES soutenance (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE rendu ADD CONSTRAINT FK_2A7F8EB9A59B3775 FOREIGN KEY (soutenance_id) REFERENCES home (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE salle_creneau ADD CONSTRAINT FK_D450E70EDC304035 FOREIGN KEY (salle_id) REFERENCES salle (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE salle_creneau ADD CONSTRAINT FK_D450E70E7D0729A9 FOREIGN KEY (creneau_id) REFERENCES creneau (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE soutenance ADD CONSTRAINT FK_4D59FF6EAFC2B591 FOREIGN KEY (module_id) REFERENCES module (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE soutenance ADD CONSTRAINT FK_4D59FF6EABC1F7FE FOREIGN KEY (prof_id) REFERENCES prof (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE soutenance_prof ADD CONSTRAINT FK_D822EB0AA59B3775 FOREIGN KEY (soutenance_id) REFERENCES soutenance (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE home ADD CONSTRAINT FK_4D59FF6EAFC2B591 FOREIGN KEY (module_id) REFERENCES module (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE home ADD CONSTRAINT FK_4D59FF6EABC1F7FE FOREIGN KEY (prof_id) REFERENCES prof (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('ALTER TABLE soutenance_prof ADD CONSTRAINT FK_D822EB0AA59B3775 FOREIGN KEY (soutenance_id) REFERENCES home (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE soutenance_prof ADD CONSTRAINT FK_D822EB0AABC1F7FE FOREIGN KEY (prof_id) REFERENCES prof (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
@@ -112,10 +112,10 @@ final class Version20200220202812 extends AbstractMigration
         $this->addSql('ALTER TABLE etudiant DROP CONSTRAINT FK_717E22E3180AA129');
         $this->addSql('ALTER TABLE filiere_prof DROP CONSTRAINT FK_D74072B2180AA129');
         $this->addSql('ALTER TABLE module DROP CONSTRAINT FK_C242628180AA129');
-        $this->addSql('ALTER TABLE soutenance DROP CONSTRAINT FK_4D59FF6EAFC2B591');
+        $this->addSql('ALTER TABLE home DROP CONSTRAINT FK_4D59FF6EAFC2B591');
         $this->addSql('ALTER TABLE filiere_prof DROP CONSTRAINT FK_D74072B2ABC1F7FE');
         $this->addSql('ALTER TABLE note DROP CONSTRAINT FK_CFBDFA14ABC1F7FE');
-        $this->addSql('ALTER TABLE soutenance DROP CONSTRAINT FK_4D59FF6EABC1F7FE');
+        $this->addSql('ALTER TABLE home DROP CONSTRAINT FK_4D59FF6EABC1F7FE');
         $this->addSql('ALTER TABLE soutenance_prof DROP CONSTRAINT FK_D822EB0AABC1F7FE');
         $this->addSql('ALTER TABLE salle_creneau DROP CONSTRAINT FK_D450E70EDC304035');
         $this->addSql('ALTER TABLE creneau DROP CONSTRAINT FK_F9668B5FA59B3775');
@@ -150,7 +150,7 @@ final class Version20200220202812 extends AbstractMigration
         $this->addSql('DROP TABLE rendu');
         $this->addSql('DROP TABLE salle');
         $this->addSql('DROP TABLE salle_creneau');
-        $this->addSql('DROP TABLE soutenance');
+        $this->addSql('DROP TABLE home');
         $this->addSql('DROP TABLE soutenance_prof');
         $this->addSql('DROP TABLE utilisateur');
     }

@@ -2,21 +2,21 @@
 
 namespace App\Security;
 
-use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
+    use TargetPathTrait;
     /**
      * @var UtilisateurRepository
      */
@@ -70,6 +70,12 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        //we must some some logic to redirect user to his specific page
+        if($targetgetPath = $this->getTargetPath($request->getSession(), $providerKey)){
+            // Test if string contains the word logout
+            if(strpos($targetgetPath, "/logout") == false)
+                return new RedirectResponse($targetgetPath);
+        }
         return new RedirectResponse($this->router->generate('home_page'));
     }
 
