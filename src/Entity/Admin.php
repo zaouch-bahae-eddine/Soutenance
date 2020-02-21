@@ -17,7 +17,7 @@ class Admin
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="admin")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="admin")
      * @ORM\JoinColumn(nullable=false)
      */
     private $compte;
@@ -27,12 +27,12 @@ class Admin
         return $this->id;
     }
 
-    public function getCompte(): ?User
+    public function getCompte(): ?Utilisateur
     {
         return $this->compte;
     }
 
-    public function setCompte(?User $compte): self
+    public function setCompte(?Utilisateur $compte): self
     {
         $this->compte = $compte;
 

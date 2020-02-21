@@ -19,7 +19,7 @@ class Etudiant
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="etudiant")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="etudiant")
      * @ORM\JoinColumn(nullable=false)
      */
     private $compte;
@@ -58,12 +58,12 @@ class Etudiant
         return $this->id;
     }
 
-    public function getCompte(): ?User
+    public function getCompte(): ?Utilisateur
     {
         return $this->compte;
     }
 
-    public function setCompte(?User $compte): self
+    public function setCompte(?Utilisateur $compte): self
     {
         $this->compte = $compte;
 

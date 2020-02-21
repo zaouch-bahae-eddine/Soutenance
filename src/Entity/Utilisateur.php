@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
  */
-class User implements UserInterface
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id()

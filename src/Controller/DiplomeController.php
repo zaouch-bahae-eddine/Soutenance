@@ -32,7 +32,7 @@ class DiplomeController extends AbstractController
      * @Route("/diplome", name="diplome_show")
      *  @Route("/diplome/set/{id}", name="diplome_set")
      */
-    public function showFiliereAction(Diplome $diplome = null)
+    public function showDiplomeAction(Diplome $diplome = null)
     {
         $formVide = $this->createForm(DiplomeFormType::class);
         $form = $this->createForm(DiplomeFormType::class,$diplome);
@@ -57,7 +57,7 @@ class DiplomeController extends AbstractController
      * @Route("/diplome/add", name="diplome_add")
      * @Route("/diplome/add/{id}", name="diplome_add_set")
      */
-    public function addFiliereAction(Request $request, Diplome $diplome = null)
+    public function addDiplomeAction(Request $request, Diplome $diplome = null)
     {
         $form = $this->createForm(DiplomeFormType::class);
         $form->handleRequest($request);
@@ -83,7 +83,7 @@ class DiplomeController extends AbstractController
     /**
      * @Route("/diplome/remove/{id}", name="diplome_remove")
      */
-    public function removeFiliereAction(Diplome $diplome)
+    public function removeDiplomeAction(Diplome $diplome)
     {
         if(!$diplome)
             throw new NotFoundHttpException('Auccun diplome a supprimer');
