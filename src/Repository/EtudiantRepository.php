@@ -19,22 +19,16 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
-    // /**
-    //  * @return Etudiant[] Returns an array of Etudiant objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findEtudiantWithoutPassword()
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('e.compte.password = :val')
+            ->setParameter('val', null)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Etudiant

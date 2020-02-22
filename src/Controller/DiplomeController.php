@@ -66,7 +66,11 @@ class DiplomeController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             if(!$diplome){
+                /**
+                 * @var Diplome $diplome
+                 */
                 $diplome = $form->getData();
+                $diplome->setAdmin($this->getUser()->getAdmin());
                 $msg = "ajouté";
             }
             else{

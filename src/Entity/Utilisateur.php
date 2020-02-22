@@ -20,12 +20,12 @@ class Utilisateur implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
     private $mailPerso;
     /**
@@ -35,7 +35,7 @@ class Utilisateur implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
@@ -53,6 +53,16 @@ class Utilisateur implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="compte", orphanRemoval=true)
      */
     private $etudiant;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
 
     public function __construct()
     {
@@ -150,11 +160,11 @@ class Utilisateur implements UserInterface
     }
 
     /**
-     * @return Collection|Admin[]
+     * @return Admin
      */
-    public function getAdmin(): Collection
+    public function getAdmin(): Admin
     {
-        return $this->admin;
+        return $this->admin[0];
     }
 
     public function addAdmin(Admin $admin): self
@@ -181,11 +191,11 @@ class Utilisateur implements UserInterface
     }
 
     /**
-     * @return Collection|Prof[]
+     * @return Prof
      */
-    public function getProf(): Collection
+    public function getProf(): Prof
     {
-        return $this->prof;
+        return $this->prof[0];
     }
 
     public function addProf(Prof $prof): self
@@ -212,11 +222,11 @@ class Utilisateur implements UserInterface
     }
 
     /**
-     * @return Collection|Etudiant[]
+     * @return Etudiant
      */
-    public function getEtudiant(): Collection
+    public function getEtudiant(): Etudiant
     {
-        return $this->etudiant;
+        return $this->etudiant[0];
     }
 
     public function addEtudiant(Etudiant $etudiant): self
@@ -238,6 +248,30 @@ class Utilisateur implements UserInterface
                 $etudiant->setCompte(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

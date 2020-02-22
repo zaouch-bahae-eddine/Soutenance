@@ -69,19 +69,6 @@ class Etudiant
 
         return $this;
     }
-
-    public function getMailPerso(): ?string
-    {
-        return $this->mailPerso;
-    }
-
-    public function setMailPerso(?string $mailPerso): self
-    {
-        $this->mailPerso = $mailPerso;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Creneau[]
      */
